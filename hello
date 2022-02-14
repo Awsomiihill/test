@@ -1,0 +1,57 @@
+#!/usr/bin/bash
+#so basically this is very rudimentary and for now is only tailored for mp4/webm files, just a test shit whatever update: now idk lol
+mkdir output_frames && mkdir input_frames;
+
+echo "audio? yes/no"
+read soundarg
+
+
+if [[ ( $soundarg == "no") ]]; then
+    echo "no sound OK!"
+
+    echo "ayyo what file extension u got there"
+    read ext 
+
+    echo "k bitch, what is ur file called"
+    read name
+
+    echo "whats the framerate of your bepis"
+    read n
+
+    ((ae=$n*2))
+
+    ffmpeg -i $name.$ext input_frames/%08d.png;
+    wait;
+    rife-ncnn-vulkan -i input_frames -o output_frames;
+    wait;
+    ffmpeg -framerate $ae -i output_frames/%08d.png $name-$n-$fps.$ext
+    wait;
+    #deletion ae script
+     #rm -r output_frames input_frames;
+
+else
+    echo "sound OK!"
+
+    echo "ayyo what file extension u got there"
+    read ext 
+
+    echo "k bitch, what is ur file called"
+    read name
+
+    echo "whats the framerate of your bepis"
+    read n
+
+    ((ae=$n*2))
+
+    ffmpeg -i $name.$ext -vn -acodec copy audio.flac;
+    wait;
+    ffmpeg -i $name.$ext input_frames/%08d.png;
+    wait;
+    rife-ncnn-vulkan -i input_frames -o output_frames;
+    wait;
+    ffmpeg -framerate $ae -i output_frames/%08d.png -i audio.flac -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p $name-$n.$ext
+    wait;
+    #deletion ae script
+     #rm -r output_frames input_frames;
+     #rm audio.flac;
+fi
