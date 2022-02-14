@@ -1,5 +1,5 @@
 # test
-## a shitty bash file that doubles your animes framerate
+## a shitty bash file that doubles your animes framerate (linux)
 
 ### warning: you need to install rife-ncnn-vulkan first you dumb nut
 
