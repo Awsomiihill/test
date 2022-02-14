@@ -1,7 +1,8 @@
 #!/usr/bin/bash
-#so basically this is very rudimentary and for now is only tailored for mp4/webm files, just a test shit whatever update: now idk lol
+#so basically this is very rudimentary, it seems as for now that it works best for single audio, normal videos, dual audio gives issues and gifs/mp4 loops are a hit and miss
 mkdir output_frames && mkdir input_frames;
 
+echo "welcome, remember to have ffmpeg and rife-ncnn-vulkan binaries installed"
 echo "audio? yes/no"
 read soundarg
 
@@ -9,13 +10,13 @@ read soundarg
 if [[ ( $soundarg == "no") ]]; then
     echo "no sound OK!"
 
-    echo "ayyo what file extension u got there"
+    echo "What file extension you got there?"
     read ext 
 
-    echo "k bitch, what is ur file called"
+    echo "Filename? MUST BE EXACT!"
     read name
 
-    echo "whats the framerate of your bepis"
+    echo "Framerate? Tip: use ffprobe"
     read n
 
     ((ae=$n*2))
@@ -24,21 +25,21 @@ if [[ ( $soundarg == "no") ]]; then
     wait;
     rife-ncnn-vulkan -i input_frames -o output_frames;
     wait;
-    ffmpeg -framerate $ae -i output_frames/%08d.png $name-$n-$fps.$ext
+    ffmpeg -framerate $ae -i output_frames/%08d.png $name-$ae-fps.$ext
     wait;
-    #deletion ae script
+    #auto-deletion ae script, they are disabled by default for now
      #rm -r output_frames input_frames;
 
 else
     echo "sound OK!"
 
-    echo "ayyo what file extension u got there"
+    echo "What file extension you got there?"
     read ext 
 
-    echo "k bitch, what is ur file called"
+    echo "Filename? MUST BE EXACT!"
     read name
 
-    echo "whats the framerate of your bepis"
+    echo "Framerate? Tip: use ffprobe"
     read n
 
     ((ae=$n*2))
@@ -49,10 +50,9 @@ else
     wait;
     rife-ncnn-vulkan -i input_frames -o output_frames;
     wait;
-    ffmpeg -framerate $ae -i output_frames/%08d.png -i audio.flac -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p $name-$n.$ext
+    ffmpeg -framerate $ae -i output_frames/%08d.png -i audio.flac -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p $name-$ae-fps.$ext
     wait;
-    #deletion ae script
+    #auto-deletion ae script, they are disabled by default for now
      #rm -r output_frames input_frames;
      #rm audio.flac;
 fi
-#miau miau miau au au au chii chii chii cra cra cra moooooo 
