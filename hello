@@ -44,15 +44,15 @@ else
 
     ((ae=$n*2))
 
-    ffmpeg -i $name.$ext -vn -acodec copy audio.flac;
+    ffmpeg -i $name.$ext -vn -acodec copy audio.mka;
     wait;
     ffmpeg -i $name.$ext input_frames/%08d.png;
     wait;
     rife-ncnn-vulkan -i input_frames -o output_frames;
     wait;
-    ffmpeg -framerate $ae -i output_frames/%08d.png -i audio.flac -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p $name-$ae-fps.$ext
+    ffmpeg -framerate $ae -i output_frames/%08d.png -i audio.mka -c:a copy -crf 20 -c:v libx264 -pix_fmt yuv420p $name-$ae-fps.$ext
     wait;
     #auto-deletion ae script, they are disabled by default for now
      #rm -r output_frames input_frames;
-     #rm audio.flac;
+     #rm audio.mka;
 fi
